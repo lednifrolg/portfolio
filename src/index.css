@@ -1,0 +1,48 @@
+:root {
+  font-family: 'IBM Plex Mono', monospace;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: #c0c0c0;
+  background-color: #1a1a1a; /* Dark background for the entire page */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a1a; /* Ensuring the background color is consistent with dark theme */
+}
+
+h1 {
+  font-size: 2em;
+  line-height: 1.1;
+  color: #c0c0c0;
+}
+
+/* Scrollbar styling for the terminal feel */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #222;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

@@ -2,7 +2,7 @@
 
 A React application that simulates a terminal interface with a bootup sequence animation and typing effect.
 
-![Terminal Page Screenshot](screenshot.jpeg)
+![Terminal Page Screenshot](preview.gif)
 
 ## Setup
 

@@ -7,8 +7,8 @@ const contactData = [
     icon: '@',
     iconClass: CSS_CLASSES.emailIcon,
     label: 'Email: ',
-    link: 'mailto:filip.tomasovych@email.com',
-    text: 'filip.tomasovych@email.com',
+    link: 'mailto:filip.tomasovych@gmail.com',
+    text: 'filip.tomasovych@gmail.com',
   },
   {
     icon: '⌨',

@@ -37,7 +37,7 @@ function Bootup({ onBootupStart, onBootupComplete }: BootupProps) {
     <div className="bootup-container">
       {showMacLogo && (
         <div className="mac-logo-container">
-          <img src="/macitnosh-96.gif" alt="Macintosh" className="mac-logo" />
+          <img src="./macintosh-96.gif" alt="Macintosh" className="mac-logo" />
         </div>
       )}
 

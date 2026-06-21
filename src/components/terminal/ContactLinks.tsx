@@ -27,37 +27,42 @@ const contactData = [
   },
 ];
 
+// Character offsets are static (derived only from contactData), so precompute them once
+// instead of mutating a running counter during render. `iconStart`/`labelStart`/`textStart`
+// are the cumulative character positions at which each segment begins revealing.
+const contactItems = contactData.reduce<
+  Array<{
+    item: (typeof contactData)[number];
+    iconStart: number;
+    labelStart: number;
+    textStart: number;
+  }>
+>((acc, item) => {
+  const prev = acc.length > 0 ? acc[acc.length - 1] : null;
+  const iconStart = prev ? prev.textStart + prev.item.text.length + 1 : 0; // +1 for spacing/newline
+  const labelStart = iconStart + (item.useIconGlyph ? 1 : item.icon.length);
+  const textStart = labelStart + item.label.length;
+  return [...acc, { item, iconStart, labelStart, textStart }];
+}, []);
+
 /**
  * Component for rendering contact links in the terminal
  */
 export function ContactLinks({ currentChar = Infinity, isAnimating = false }: ContactLinksProps) {
-  useMemo(() => {
-    return contactData.reduce((total, item) => {
-      const iconLength = item.useIconGlyph ? 1 : item.icon.length;
-      const labelLength = item.label.length;
-      const textLength = item.text.length;
-      return total + iconLength + labelLength + textLength + 1; // +1 for spacing/newline
-    }, 0);
-  }, []);
   const renderContactItems = useMemo(() => {
-    let charCount = 0;
+    return contactItems
+      .map(({ item, iconStart, labelStart, textStart }, index) => {
+        const isIconVisible = iconStart < currentChar;
 
-    return contactData
-      .map((item, index) => {
-        const isIconVisible = charCount < currentChar;
-        charCount += item.useIconGlyph ? 1 : item.icon.length;
-
-        const isLabelVisible = charCount < currentChar;
+        const isLabelVisible = labelStart < currentChar;
         const labelVisibleChars = isLabelVisible
-          ? Math.min(item.label.length, currentChar - (charCount - item.label.length))
+          ? Math.min(item.label.length, currentChar - (labelStart - item.label.length))
           : 0;
-        charCount += item.label.length;
 
-        const isTextVisible = charCount < currentChar;
+        const isTextVisible = textStart < currentChar;
         const textVisibleChars = isTextVisible
-          ? Math.min(item.text.length, currentChar - (charCount - item.text.length))
+          ? Math.min(item.text.length, currentChar - (textStart - item.text.length))
           : 0;
-        charCount += item.text.length + 1; // +1 for spacing/newline
 
         // Only render this contact item if at least the icon is visible
         if (!isIconVisible && isAnimating) {
